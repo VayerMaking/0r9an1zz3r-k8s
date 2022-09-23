@@ -22,25 +22,65 @@ spec:
             - containerPort: 5000
           env:
             - name: APP_NAME
-              value: "0r9an1zz3r"
+              valueFrom:
+                  secretKeyRef:
+                    name: api-secrets
+                    key: APP_NAME
+                    optional: false
             - name: DB_HOST
-              value: "postgres_db"
+              valueFrom:
+                  secretKeyRef:
+                    name: api-secrets
+                    key: DB_HOST
+                    optional: false
             - name: DB_DATABASE
-              value: "0r9an1zz3r_db"
+              valueFrom:
+                  secretKeyRef:
+                    name: api-secrets
+                    key: DB_DATABASE
+                    optional: false
             - name: DB_USERNAME
-              value: "admin"
+              valueFrom:
+                  secretKeyRef:
+                    name: api-secrets
+                    key: DB_USERNAME
+                    optional: false
             - name: DB_PASSWORD
-              value: "password"
+              valueFrom:
+                  secretKeyRef:
+                    name: api-secrets
+                    key: DB_PASSWORD
+                    optional: false
             - name: DB_PORT
-              value: "5432"
+              valueFrom:
+                  secretKeyRef:
+                    name: api-secrets
+                    key: DB_PORT
+                    optional: false
             - name: JWT_SECRET
-              value: "verystrongpasswordthatisusedforasecret123"
+              valueFrom:
+                  secretKeyRef:
+                    name: api-secrets
+                    key: JWT_SECRET
+                    optional: false
             - name: UPLOAD_FOLDER
-              value: "uploads"
+              valueFrom:
+                  secretKeyRef:
+                    name: api-secrets
+                    key: UPLOAD_FOLDER
+                    optional: false
             - name: FLASK_APP
-              value: "main.py"
+              valueFrom:
+                  secretKeyRef:
+                    name: api-secrets
+                    key: FLASK_APP
+                    optional: false
             - name: FLASK_ENV
-              value: "development"
+              valueFrom:
+                  secretKeyRef:
+                    name: api-secrets
+                    key: FLASK_ENV
+                    optional: false
 
 ---
 apiVersion: v1
