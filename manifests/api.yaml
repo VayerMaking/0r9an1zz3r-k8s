@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-deployment
+  name: api
   labels:
     app: api
 spec:
@@ -19,7 +19,7 @@ spec:
         - name: api
           image: vayer/0r9an1zz3r_api:1.0.2
           ports:
-            - containerPort: 5000
+            - containerPort: 80
           env:
             - name: APP_NAME
               valueFrom:
@@ -86,12 +86,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-service
+  name: api
 spec:
   ports:
-  - port: 5000
-    protocol: TCP
-    targetPort: 5000
+    - port: 80
+      targetPort: 80
   selector:
     app: api
-  type: LoadBalancer
+  type:
+    LoadBalancer
