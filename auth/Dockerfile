@@ -8,5 +8,8 @@ RUN npm install
 
 COPY . .
 # COPY .env .
+RUN chmod +x ./start.sh
 
 EXPOSE 5000
+
+ENTRYPOINT ["./start.sh"]

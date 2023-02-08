@@ -1,0 +1,91 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+  labels:
+    app: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: vayer/0r9an1zz3r_auth:1.0.0
+          imagePullPolicy: Always 
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PORT
+              valueFrom:
+                  secretKeyRef:
+                    name: auth-secrets
+                    key: PORT
+                    optional: false
+            - name: DATABASE_URL
+              valueFrom:
+                  secretKeyRef:
+                    name: auth-secrets
+                    key: DATABASE_URL
+                    optional: false
+            - name: REDIS_URL
+              valueFrom:
+                  secretKeyRef:
+                    name: auth-secrets
+                    key: REDIS_URL
+                    optional: false
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                  secretKeyRef:
+                    name: auth-secrets
+                    key: GOOGLE_CLIENT_ID
+                    optional: false
+            - name: GOOGLE_CLIENT_SECRET
+              valueFrom:
+                  secretKeyRef:
+                    name: auth-secrets
+                    key: GOOGLE_CLIENT_SECRET
+                    optional: false
+            - name: ACCESS_TOKEN_SECRET
+              valueFrom:
+                  secretKeyRef:
+                    name: auth-secrets
+                    key: ACCESS_TOKEN_SECRET
+                    optional: false
+            - name: ACCESS_TOKEN_AGE
+              valueFrom:
+                  secretKeyRef:
+                    name: auth-secrets
+                    key: ACCESS_TOKEN_AGE
+                    optional: false
+            - name: REFRESH_TOKEN_SECRET
+              valueFrom:
+                  secretKeyRef:
+                    name: auth-secrets
+                    key: REFRESH_TOKEN_SECRET
+                    optional: false
+            - name: REFRESH_TOKEN_AGE
+              valueFrom:
+                  secretKeyRef:
+                    name: auth-secrets
+                    key: REFRESH_TOKEN_AGE
+                    optional: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth
+spec:
+  ports:
+    - port: 5000
+      targetPort: 5000
+  selector:
+    app: auth
+  type:
+    LoadBalancer
